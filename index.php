@@ -35,6 +35,7 @@
                 </div>
             </div>
         </div>
+        
         <?php include 'layouts/footer.php'; ?>
     </div>
     <!-- end main content-->
