@@ -17,6 +17,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 ?>
 
+<!-- majak -->
+
 <head>
     <?php includeFileWithVariables('layouts/title-meta.php', array('title' => 'Team')); ?>
     <?php include 'layouts/head-css.php'; ?>
