@@ -82,8 +82,9 @@
                                     <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
                                         <div class="card-body p-4 p-md-5 form-container">
                                             <div class="top-bar">
-                                            <div class="left">
-                                                    <a class="btn btn-success" href="Add_Employees.php">Add New Employee</a>
+                                                <div class="left">
+                                                    <a class="btn btn-success" href="Add_Employees.php">Add New
+                                                        Employee</a>
                                                 </div>
                                                 <div class="right">
                                                     <div class="search-wrapper" id="custom-search"></div>
@@ -150,7 +151,7 @@
     <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
     <script src="assets/js/app.js"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             const table = $('#example').DataTable({
                 dom: 'frtip',
                 lengthChange: false,
@@ -163,7 +164,7 @@
             $('#example_filter').remove();
 
             // Remove "Search:" label text
-            $('#custom-search label').contents().filter(function() {
+            $('#custom-search label').contents().filter(function () {
                 return this.nodeType === 3;
             }).remove();
 
@@ -171,17 +172,17 @@
             $('#custom-search input').attr('placeholder', 'Search Employees...');
 
             // Search functionality
-            $('#custom-search input').on('keyup', function() {
+            $('#custom-search input').on('keyup', function () {
                 table.search(this.value).draw();
             });
 
             // Toggle status functionality
-            $(document).on('click', '.toggle-status', function() {
+            $(document).on('click', '.toggle-status', function () {
                 const button = $(this),
                     id = button.data('id');
                 $.post('toggle_status.php', {
                     id
-                }, function(response) {
+                }, function (response) {
                     if (response === 'Active') {
                         button.removeClass('btn-warning').addClass('btn-success').text('Active');
                     } else if (response === 'InActive') {
@@ -193,13 +194,13 @@
             });
 
             // Delete employee functionality
-            $(document).on('click', '.delete-employee', function() {
+            $(document).on('click', '.delete-employee', function () {
                 const button = $(this),
                     id = button.data('id');
                 if (confirm('Are you sure you want to delete this employee?')) {
                     $.post('delete_employee.php', {
                         id
-                    }, function(response) {
+                    }, function (response) {
                         if (response.trim() === 'success') {
                             button.closest('tr').remove();
                         } else {

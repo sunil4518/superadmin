@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 09, 2025 at 11:34 AM
+-- Generation Time: May 12, 2025 at 07:07 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `company_software`
+-- Database: `company_software_2.0`
 --
 
 -- --------------------------------------------------------
@@ -147,15 +147,16 @@ CREATE TABLE `employees` (
   `department` varchar(100) DEFAULT NULL,
   `designation` varchar(100) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `status` varchar(20) DEFAULT NULL
+  `status` varchar(20) DEFAULT NULL,
+  `User_status` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `employees`
 --
 
-INSERT INTO `employees` (`id`, `fullname`, `number`, `email`, `password`, `addressline`, `pincode`, `city`, `state`, `aadhar_number`, `pan_number`, `qualification`, `work_experience`, `bank_name`, `account_number`, `ifsc_code`, `emergency_number`, `join_date`, `branch`, `department`, `designation`, `created_at`, `status`) VALUES
-(4, 'Sunil Kumar Gavariya', '8890440369', 'sunil@gmail.com', '', 'Panchayat Samiti Ke Peeche', '302012', 'Jaipur', 'Rajasthan', '562511745789', 'PZYPS8086N', 'B.Com', '2 Years', 'BOB', '295780100000251', 'BARB0JHOTWA', '7220095320', '2025-05-01', 'Civil Lines Branch', 'SALES', 'Sales Manager', '2025-05-08 07:54:23', 'Active');
+INSERT INTO `employees` (`id`, `fullname`, `number`, `email`, `password`, `addressline`, `pincode`, `city`, `state`, `aadhar_number`, `pan_number`, `qualification`, `work_experience`, `bank_name`, `account_number`, `ifsc_code`, `emergency_number`, `join_date`, `branch`, `department`, `designation`, `created_at`, `status`, `User_status`) VALUES
+(4, 'Sunil Kumar Gavariya', '8890440369', 'sunil@gmail.com', '', 'Panchayat Samiti Ke Peeche', '302012', 'Jaipur', 'Rajasthan', '562511745789', 'PZYPS8086N', 'B.Com', '2 Years', 'BOB', '295780100000251', 'BARB0JHOTWA', '7220095320', '2025-05-01', 'Civil Lines Branch', 'SALES', 'Sales Manager', '2025-05-08 07:54:23', 'InActive', 'Active');
 
 --
 -- Indexes for dumped tables
