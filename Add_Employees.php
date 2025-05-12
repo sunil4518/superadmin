@@ -51,15 +51,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div class="container-fluid">
                     <section class="gradient-custom">
                         <div class="container">
-                            <div class="row justify-content-center">
-                                <div class="col-lg-12">
+                              <div class="col-lg-12">
                                     <div class="card shadow-lg" style="border-radius: 15px;">
                                         <div class="card-body p-4">
                                             <a class="btn btn-success mb-3" href="Employees.php"><i class="fa-solid fa-arrow-left"></i> Back</a>
                                             <form method="POST">
                                                 <!-- Repeat for each field -->
                                                 <div class="row">
-                                                    <div class="col-md-6 mb-3">
+                                                    <div class="row justify-content-center">
+                              <div class="col-md-6 mb-3">
                                                         <label>Full Name</label>
                                                         <input type="text" name="fullname" class="form-control" required>
                                                     </div>
