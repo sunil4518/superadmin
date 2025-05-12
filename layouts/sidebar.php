@@ -88,7 +88,7 @@
                                         <a href="Product.php" class="nav-link" data-key="t-alerts">Product</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="#" class="nav-link" data-key="t-alerts">Coupan Code</a>
+                                        <a href="Coupan.php" class="nav-link" data-key="t-alerts">Coupan Code</a>
                                     </li>
                                 </ul>
                             </div>
