@@ -65,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                                 </div>
 
                                                 <button type="submit" class="btn btn-primary">Create</button>
-                                            </form>
+                                              </form>
 
                                         </div>
                                     </div>
