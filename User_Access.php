@@ -82,14 +82,30 @@
                                     <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
                                         <div class="card-body p-4 p-md-5 form-container">
                                             <div class="top-bar">
+                                                <!-- Show session message -->
+                                                <?php if (isset($_SESSION['Success'])): ?>
+                                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                                        <?= $_SESSION['Success'];
+                                                        unset($_SESSION['Success']); ?>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                                    </div>
+                                                <?php elseif (isset($_SESSION['Error'])): ?>
+                                                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                                        <?= $_SESSION['Error'];
+                                                        unset($_SESSION['Error']); ?>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                                    </div>
+                                                <?php endif; ?>
+
+
                                                 <div class="left">
-                                                    <a class="btn btn-success" href="Add_User_Access.php">Give User
-                                                        Access</a>
+                                                    <a class="btn btn-success" href="Add_User_Access.php">Give User Access</a>
                                                 </div>
                                                 <div class="right">
                                                     <div class="search-wrapper" id="custom-search"></div>
                                                 </div>
                                             </div>
+
                                             <table id="example" class="table table-striped table-bordered"
                                                 cellspacing="0" width="100%">
                                                 <thead>
@@ -151,7 +167,7 @@
     <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
     <script src="assets/js/app.js"></script>
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             const table = $('#example').DataTable({
                 dom: 'frtip',
                 lengthChange: false,
@@ -164,7 +180,7 @@
             $('#example_filter').remove();
 
             // Remove "Search:" label text
-            $('#custom-search label').contents().filter(function () {
+            $('#custom-search label').contents().filter(function() {
                 return this.nodeType === 3;
             }).remove();
 
@@ -172,17 +188,17 @@
             $('#custom-search input').attr('placeholder', 'Search User...');
 
             // Search functionality
-            $('#custom-search input').on('keyup', function () {
+            $('#custom-search input').on('keyup', function() {
                 table.search(this.value).draw();
             });
 
             // Toggle status functionality
-            $(document).on('click', '.toggle-status', function () {
+            $(document).on('click', '.toggle-status', function() {
                 const button = $(this),
                     id = button.data('id');
                 $.post('User_access_toggle_status.php', {
                     id
-                }, function (response) {
+                }, function(response) {
                     if (response === 'Active') {
                         button.removeClass('btn-warning').addClass('btn-success').text('Active');
                     } else if (response === 'InActive') {
@@ -194,13 +210,13 @@
             });
 
             // Delete employee functionality
-            $(document).on('click', '.delete-employee', function () {
+            $(document).on('click', '.delete-employee', function() {
                 const button = $(this),
                     id = button.data('id');
                 if (confirm('Are you sure you want to delete this employee?')) {
                     $.post('delete_employee.php', {
                         id
-                    }, function (response) {
+                    }, function(response) {
                         if (response.trim() === 'success') {
                             button.closest('tr').remove();
                         } else {

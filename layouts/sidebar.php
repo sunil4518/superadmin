@@ -78,15 +78,17 @@
                     <a class="nav-link menu-link" href="#ServiceManagement" data-bs-toggle="collapse" role="button"
                         aria-expanded="false" aria-controls="ServiceManagement">
                         <i class="fas fa-wrench"></i>
-                        <span data-key="t-base-ui">Service Management</span>
+                        <span data-key="t-base-ui">Product Management</span>
                     </a>
                     <div class="collapse menu-dropdown mega-dropdown-menu" id="ServiceManagement">
                         <div class="row">
                             <div class="col-lg-4">
                                 <ul class="nav nav-sm flex-column">
                                     <li class="nav-item">
-                                        <a href="#" class="nav-link" data-key="t-alerts">Designation
-                                            List</a>
+                                        <a href="#" class="nav-link" data-key="t-alerts">Product</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#" class="nav-link" data-key="t-alerts">Coupan Code</a>
                                     </li>
                                 </ul>
                             </div>
