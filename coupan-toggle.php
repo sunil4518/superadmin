@@ -1,21 +1,28 @@
 <?php
 include 'config.php';
 
-if (isset($_GET['id'])) {
-    $id = intval($_GET['id']);
+if (isset($_POST['id'])) {
+    $id = intval($_POST['id']);
 
-    $query = mysqli_query($link, "SELECT status FROM coupan WHERE id = $id");
-    if ($row = mysqli_fetch_assoc($query)) {
+    // Get current status
+    $query = "SELECT status FROM coupan WHERE id = $id";
+    $result = mysqli_query($link, $query);
+    $row = mysqli_fetch_assoc($result);
+
+    if ($row) {
         $newStatus = ($row['status'] === 'Active') ? 'InActive' : 'Active';
-        mysqli_query($link, "UPDATE coupan SET status = '$newStatus' WHERE id = $id");
 
-        // Redirect back to the coupon list
-        header("Location: coupan.php"); // Make sure this matches your actual list page filename
-        exit;
+        // Update status
+        $updateQuery = "UPDATE coupan SET status = '$newStatus' WHERE id = $id";
+        if (mysqli_query($link, $updateQuery)) {
+            echo $newStatus;
+        } else {
+            echo "Error";
+        }
     } else {
-        echo 'Invalid Coupon ID';
+        echo "NotFound";
     }
 } else {
-    echo 'ID not provided';
+    echo "Invalid";
 }
 ?>

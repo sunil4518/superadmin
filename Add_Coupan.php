@@ -51,8 +51,7 @@ if (isset($_POST['submit'])) {
                         <div class="col-lg-12">
                             <div class="form-section mt-4">
                                 <div class="d-flex justify-content-between align-items-center mb-3">
-                                    <a href="Coupan.php" class="btn btn-success"><i class="fa fa-arrow-left"></i>
-                                        Back</a>
+                                    <a href="Coupan.php" class="btn btn-success"><i class="fa fa-arrow-left"></i> Back</a>
                                 </div>
                                 <form method="POST">
                                     <div class="row">
@@ -63,8 +62,16 @@ if (isset($_POST['submit'])) {
                                         </div>
                                         <div class="col-md-6 mb-3">
                                             <label class="form-label">Service</label>
-                                            <input type="text" name="service" class="form-control"
-                                                placeholder="Enter service name" required>
+                                            <select name="service" class="form-select" required>
+                                                <option value="">Select Service</option>
+                                                <?php
+                                                $query = "SELECT DISTINCT service FROM product WHERE status = 'Active'";
+                                                $result = mysqli_query($link, $query);
+                                                while ($row = mysqli_fetch_assoc($result)) {
+                                                    echo '<option value="' . htmlspecialchars($row['service']) . '">' . htmlspecialchars($row['service']) . '</option>';
+                                                }
+                                                ?>
+                                            </select>
                                         </div>
                                     </div>
 
@@ -84,13 +91,10 @@ if (isset($_POST['submit'])) {
                                     </div>
 
                                     <button type="submit" name="submit" class="btn btn-primary">Add Coupan</button>
-
-
                                 </form>
                             </div>
                         </div>
                     </div>
-
 
                 </div>
             </div>
@@ -101,5 +105,4 @@ if (isset($_POST['submit'])) {
     <?php include 'layouts/vendor-scripts.php'; ?>
     <script src="assets/js/app.js"></script>
 </body>
-
 </html>

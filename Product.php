@@ -1,8 +1,9 @@
 <?php include 'layouts/session.php'; ?>
 <?php include 'layouts/main.php'; ?>
+<?php include 'config.php'; ?>
 
 <head>
-    <?php includeFileWithVariables('layouts/title-meta.php', array('title' => 'Team')); ?>
+    <?php includeFileWithVariables('layouts/title-meta.php', array('title' => 'Products')); ?>
     <?php include 'layouts/head-css.php'; ?>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.dataTables.min.css">
@@ -15,26 +16,9 @@
             flex-wrap: wrap;
         }
 
-        .top-bar .left {
-            display: flex;
-            justify-content: flex-start;
-        }
-
-        .top-bar .right {
-            display: flex;
-            justify-content: flex-end;
-        }
-
         .search-wrapper {
             display: flex;
-            width: 100%;
             max-width: 250px;
-        }
-
-        .search-wrapper label {
-            margin: 0;
-            display: flex;
-            align-items: center;
             width: 100%;
         }
 
@@ -53,16 +37,13 @@
                 align-items: center;
             }
 
-            .top-bar .left,
-            .top-bar .right {
+            .top-bar > div {
                 width: 100%;
                 justify-content: center;
                 margin-bottom: 10px;
             }
 
-            .top-bar .left .btn,
             .search-wrapper {
-                width: 100%;
                 max-width: none;
             }
         }
@@ -82,37 +63,46 @@
                                     <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
                                         <div class="card-body p-4 p-md-5 form-container">
                                             <div class="top-bar">
-                                                <div class="left">
-                                                    <a class="btn btn-success" href="Add_Product.php">Add New Product</a>
-                                                </div>
-                                                <div class="right">
-                                                    <div class="search-wrapper" id="custom-search"></div>
-                                                </div>
-                                            </div>
-                                            <table id="example" class="table table-striped table-bordered"
-                                                cellspacing="0" width="100%">
+    <div class="d-flex gap-2 flex-wrap">
+        <a class="btn btn-success" href="Add_Product.php">Add New Product</a>
+        <a class="btn btn-success" href="Add_Combo.php">Add Combo</a> <!-- Replace with actual page -->
+    </div>
+    <div class="search-wrapper" id="custom-search"></div>
+</div>
+
+                                            <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
                                                 <thead>
                                                     <tr>
                                                         <th>S.No.</th>
                                                         <th>Service Name</th>
                                                         <th>Service Amount</th>
                                                         <th>Service Type</th>
+                                                
                                                         <th>Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <?php
-                                                    include 'config.php';
                                                     $res = "SELECT * FROM product";
                                                     $product = mysqli_query($link, $res);
+                                                    $sno = 1;
+                                                    while ($data = mysqli_fetch_assoc($product)):
+                                                        $statusClass = $data['status'] === 'Active' ? 'btn-success' : 'btn-warning';
                                                     ?>
-                                                    <tr>
-                                                        <?php while ($data = mysqli_fetch_assoc($product)): ?>
-                                                            <td><?php echo $data['id']; ?></td>
-                                                            <td><?php echo $data['service']; ?></td>
-                                                            <td><?php echo $data['amount']; ?></td>
-                                                            <td><?php echo $data['service_type']; ?></td>
-                                                            
+                                                        <tr id="row-<?= $data['id']; ?>">
+                                                            <td><?= $sno++; ?></td>
+                                                            <td><?= $data['service']; ?></td>
+                                                            <td><?= $data['amount']; ?></td>
+                                                            <td><?= $data['service_type']; ?></td>
+                                                        
+                                                            <td>
+                                                                 <button class="btn btn-sm <?= $statusClass ?> toggle-status" data-id="<?= $data['id']; ?>">
+                                                                    <?= $data['status']; ?>
+                                                                </button>
+                                                                <a href="delete-product.php?id=<?= $data['id']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this product?');">
+                                                                    Delete
+                                                                </a>
+                                                            </td>
                                                         </tr>
                                                     <?php endwhile; ?>
                                                 </tbody>
@@ -128,11 +118,13 @@
             <?php include 'layouts/footer.php'; ?>
         </div>
     </div>
+
     <?php include 'layouts/vendor-scripts.php'; ?>
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
     <script src="assets/js/app.js"></script>
+
     <script>
         $(document).ready(function () {
             let table = $('#example').DataTable({
@@ -141,17 +133,30 @@
                 pageLength: 10,
                 responsive: true
             });
+
             $('#custom-search').html($('#example_filter').html());
             $('#example_filter').remove();
             $('#custom-search label').contents().filter(function () {
                 return this.nodeType === 3;
             }).remove();
             $('#custom-search input').attr('placeholder', 'Search Product...');
-            $('#custom-search input').on('keyup', function () {
-                table.search(this.value).draw();
+
+            // Status toggle
+            $(document).on('click', '.toggle-status', function () {
+                const button = $(this);
+                const id = button.data('id');
+
+                $.post('toggle-product-status.php', { id }, function (response) {
+                    if (response === 'Active') {
+                        button.removeClass('btn-warning').addClass('btn-success').text('Active');
+                    } else if (response === 'Inactive') {
+                        button.removeClass('btn-success').addClass('btn-warning').text('Inactive');
+                    } else {
+                        alert('Failed to update status');
+                    }
+                });
             });
         });
     </script>
 </body>
-
 </html>

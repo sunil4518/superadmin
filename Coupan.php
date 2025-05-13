@@ -89,20 +89,18 @@
                                                     <div class="search-wrapper" id="custom-search"></div>
                                                 </div>
                                             </div>
-                                            <table id="example" class="table table-striped table-bordered"
-                                                cellspacing="0" width="100%">
+                                            <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
                                                 <thead>
                                                     <tr>
                                                         <th>S.No.</th>
                                                         <th>Coupan</th>
                                                         <th>Service</th>
                                                         <th>Amount</th>
-
                                                         <th>Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <?php
+                                                   <?php
                                                     include 'config.php';
                                                     $res = "SELECT * FROM coupan";
                                                     $branch = mysqli_query($link, $res);
@@ -110,26 +108,21 @@
                                                     while ($data = mysqli_fetch_assoc($branch)):
                                                         $statusClass = $data['status'] === 'Active' ? 'btn-success' : 'btn-warning';
                                                         ?>
-                                                        <tr>
+                                                        <tr id="row-<?= $data['id']; ?>">
                                                             <td><?= $sno++; ?></td>
                                                             <td><?= $data['coupan']; ?></td>
                                                             <td><?= $data['service']; ?></td>
                                                             <td><?= $data['amount']; ?></td>
 
                                                             <td>
-                                                                <a href="coupan-toggle.php?id=<?= $data['id']; ?>"
-                                                                    class="btn btn-sm <?= $statusClass ?>">
+                                                                <button class="btn btn-sm <?= $statusClass ?> toggle-status" data-id="<?= $data['id']; ?>">
                                                                     <?= $data['status']; ?>
-                                                                </a>
-                                                                <a href="delete-coupan.php?id=<?= $data['id']; ?>"
-                                                                    class="btn btn-danger btn-sm"
-                                                                    onclick="return confirm('Are you sure?');">Delete</a>
+                                                                </button>
+                                                                <a href="delete-coupan.php?id=<?= $data['id']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?');">Delete</a>
                                                             </td>
                                                         </tr>
                                                     <?php endwhile; ?>
-
                                                 </tbody>
-
                                             </table>
                                         </div>
                                     </div>
@@ -147,6 +140,7 @@
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
     <script src="assets/js/app.js"></script>
+
     <script>
         $(document).ready(function () {
             let table = $('#example').DataTable({
@@ -155,32 +149,39 @@
                 pageLength: 10,
                 responsive: true
             });
+
+            // Move search box to custom container
             $('#custom-search').html($('#example_filter').html());
             $('#example_filter').remove();
+
+            // Remove "Search:" label text
             $('#custom-search label').contents().filter(function () {
                 return this.nodeType === 3;
             }).remove();
+
+            // Update placeholder
             $('#custom-search input').attr('placeholder', 'Search Coupan...');
+
+            // Search functionality
             $('#custom-search input').on('keyup', function () {
                 table.search(this.value).draw();
             });
-        });
 
-    </script>
-    <script>
-        function toggleStatus(id) {
-            fetch('coupan-troggle.php', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: 'id=' + id
-            })
-                .then(response => response.text())
-                .then(data => {
-                    alert("Status changed to: " + data);
-                    location.reload(); // optional: reload to reflect changes
+            // Toggle status functionality
+            $(document).on('click', '.toggle-status', function () {
+                const button = $(this),
+                      id = button.data('id');
+                $.post('coupan-toggle.php', { id }, function (response) {
+                    if (response === 'Active') {
+                        button.removeClass('btn-warning').addClass('btn-success').text('Active');
+                    } else if (response === 'InActive') {
+                        button.removeClass('btn-success').addClass('btn-warning').text('InActive');
+                    } else {
+                        alert('Failed to update status');
+                    }
                 });
-        }
+            });
+        });
     </script>
 </body>
-
 </html>
