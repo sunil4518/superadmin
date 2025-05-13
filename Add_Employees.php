@@ -55,13 +55,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <div class="col-lg-12">
                                     <div class="card shadow-lg" style="border-radius: 15px;">
                                         <div class="card-body p-4">
-                                            <a class="btn btn-success mb-3" href="Employees.php"><i class="fa-solid fa-arrow-left"></i> Back</a>
+                                            <a class="btn btn-success mb-3" href="Employees.php"><i
+                                                    class="fa-solid fa-arrow-left"></i> Back</a>
                                             <form method="POST">
                                                 <!-- Repeat for each field -->
                                                 <div class="row">
                                                     <div class="col-md-6 mb-3">
                                                         <label>Full Name</label>
-                                                        <input type="text" name="fullname" class="form-control" required>
+                                                        <input type="text" name="fullname" class="form-control"
+                                                            required>
                                                     </div>
                                                     <div class="col-md-6 mb-3">
                                                         <label>Email</label>
@@ -70,10 +72,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                                     <div class="col-md-6 mb-3">
                                                         <label>Mobile Number</label>
                                                         <input type="text" name="number" class="form-control" required>
-                                                    </div>
+                                                    </div>  
                                                     <div class="col-md-6 mb-3">
                                                         <label>Alternate Number</label>
-                                                        <input type="text" name="Alternatenumber" class="form-control" required>
+                                                        <input type="text" name="Alternatenumber" class="form-control"
+                                                            required>
                                                     </div>
                                                     <div class="col-md-6 mb-3">
                                                         <label>Address</label>
@@ -83,21 +86,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                                         <label>Pincode</label>
                                                         <input type="text" name="pincode" class="form-control">
                                                     </div>
-                                                    <div class="col-md-3 mb-3"><label>State</label><select name="state" id="stateSelect" class="form-control" required>
+                                                    <div class="col-md-3 mb-3"><label>State</label><select name="state"
+                                                            id="stateSelect" class="form-control" required>
                                                             <option value="">Select State</option>
                                                         </select></div>
-                                                    <div class="col-md-3 mb-3"><label>City</label><select name="city" id="citySelect" class="form-control" required>
+                                                    <div class="col-md-3 mb-3"><label>City</label><select name="city"
+                                                            id="citySelect" class="form-control" required>
                                                             <option value="">Select City</option>
                                                         </select></div>
                                                     <div class="col-md-3 mb-3">
                                                         <label>Aadhar Number</label>
-                                                        <input type="text" name="aadhar_number" id="aadhar_number" class="form-control" maxlength="12" required placeholder="Enter 12 digit Aadhar">
+                                                        <input type="text" name="aadhar_number" id="aadhar_number"
+                                                            class="form-control" maxlength="12" required
+                                                            placeholder="Enter 12 digit Aadhar">
                                                     </div>
 
 
                                                     <div class="col-md-3 mb-3">
                                                         <label>PAN Number</label>
-                                                        <input type="text" name="pan_number" id="pan_number" class="form-control" maxlength="10" pattern="[A-Z]{5}[0-9]{4}[A-Z]{1}" title="Enter valid PAN format: AAAAA9999A" required placeholder="ABCDE1234F">
+                                                        <input type="text" name="pan_number" id="pan_number"
+                                                            class="form-control" maxlength="10"
+                                                            pattern="[A-Z]{5}[0-9]{4}[A-Z]{1}"
+                                                            title="Enter valid PAN format: AAAAA9999A" required
+                                                            placeholder="ABCDE1234F">
                                                     </div>
 
                                                     <div class="col-md-3 mb-3">
@@ -211,7 +222,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Aadhar Number: Allow only digits and limit to 12
     const aadharInput = document.getElementById("aadhar_number");
     if (aadharInput) {
-        aadharInput.addEventListener("input", function(e) {
+        aadharInput.addEventListener("input", function (e) {
             let value = e.target.value.replace(/\D/g, ''); // Remove non-digits
             e.target.value = value.slice(0, 12); // Limit to 12 digits
         });
@@ -220,7 +231,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // PAN Number: Convert to uppercase, allow only alphanumeric, limit to 10
     const panInput = document.getElementById("pan_number");
     if (panInput) {
-        panInput.addEventListener("input", function(e) {
+        panInput.addEventListener("input", function (e) {
             let value = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
             e.target.value = value.slice(0, 10);
         });
