@@ -11,10 +11,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <title>Client Summary</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
+
 <body class="bg-light">
     <div class="container mt-4">
         <div class="d-flex justify-content-between align-items-center mb-4">
@@ -66,7 +68,9 @@ GST Amount: ₹<?= addslashes($clientData['gst_amount']) ?>
 Payable Amount: ₹<?= addslashes($clientData['payable_amount']) ?>
             `;
 
-            const blob = new Blob([content], { type: 'text/plain' });
+            const blob = new Blob([content], {
+                type: 'text/plain'
+            });
             const url = URL.createObjectURL(blob);
             const a = document.createElement("a");
             a.href = url;
@@ -76,4 +80,5 @@ Payable Amount: ₹<?= addslashes($clientData['payable_amount']) ?>
         }
     </script>
 </body>
+
 </html>
