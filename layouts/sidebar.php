@@ -63,11 +63,17 @@
                         <div class="row">
                             <div class="col-lg-4">
                                 <ul class="nav nav-sm flex-column">
-
-
                                     <li class="nav-item">
-                                        <a href="" class="nav-link" data-key="t-alerts">Department
-                                            List</a>
+                                        <a href="Service.php" class="nav-link" data-key="t-alerts">Book Services</a>
+                                    </li>
+                                      <li class="nav-item">
+                                        <a href="" class="nav-link" data-key="t-alerts">Make Teams</a>
+                                    </li>
+                                      <li class="nav-item">
+                                        <a href="" class="nav-link" data-key="t-alerts">Give Targets</a>
+                                    </li>
+                                      <li class="nav-item">
+                                        <a href="" class="nav-link" data-key="t-alerts">Give Incentive</a>
                                     </li>
                                 </ul>
                             </div>
@@ -85,7 +91,7 @@
                             <div class="col-lg-4">
                                 <ul class="nav nav-sm flex-column">
                                     <li class="nav-item">
-                                        <a href="#" class="nav-link" data-key="t-alerts">Product</a>
+                                        <a href="Product.php" class="nav-link" data-key="t-alerts">Product</a>
                                     </li>
                                     <li class="nav-item">
                                         <a href="Coupan.php" class="nav-link" data-key="t-alerts">Coupan Code</a>
