@@ -36,105 +36,102 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['service_id'])) {
                                 <div class="col-lg-10">
                                     <div class="card shadow-lg" style="border-radius: 15px;">
                                         <div class="card-body p-4">
-                                            <h4 class="mb-3">Client Detail</h4>
-                                            <form method="POST" action="summary.php">
-                                                <!-- Client Details -->
-                                                <div class="row">
-                                                    <div class="mb-3 col-md-6">
-                                                        <label class="form-label">Name</label>
-                                                        <input type="text" name="name" class="form-control" required>
+
+                                            <form method="POST" action="summary.php" id="multiStepForm">
+                                                <!-- Step 1 - Client Detail -->
+                                                <div class="form-step" id="step1">
+                                                    <h4 class="mb-3">Client Details</h4>
+                                                    <div class="row">
+                                                        <div class="mb-3 col-md-6">
+                                                            <label class="form-label">Name</label>
+                                                            <input type="text" name="name" class="form-control" required>
+                                                        </div>
+                                                        <div class="mb-3 col-md-6">
+                                                            <label class="form-label">Number</label>
+                                                            <input type="text" name="number" class="form-control" required>
+                                                        </div>
+                                                        <div class="mb-3 col-md-6">
+                                                            <label class="form-label">Email</label>
+                                                            <input type="email" name="email" class="form-control" required>
+                                                        </div>
+                                                        <div class="col-md-3 mb-3"><label>State</label><select name="state"
+                                                            id="stateSelect" class="form-control" required>
+                                                            <option value="">Select State</option>
+                                                        </select></div>
+                                                    <div class="col-md-3 mb-3"><label>City</label><select name="city"
+                                                            id="citySelect" class="form-control" required>
+                                                            <option value="">Select City</option>
+                                                        </select></div>
+                                                           <div class="col-md-6 mb-3">
+                                                        <label>Pincode</label>
+                                                        <input type="text" name="pincode" class="form-control">
                                                     </div>
-                                                    <div class="mb-3 col-md-6">
-                                                        <label class="form-label">Organization</label>
-                                                        <input type="text" name="organization" class="form-control">
+                                                       <div class="mb-3 col-md-6">
+                                                            <label class="form-label">Service Name</label>
+                                                            <select name="service_name" class="form-control" id="serviceDropdown" required>
+                                                                <option value="">Select Service</option>
+                                                                <?php
+                                                                $query = mysqli_query($link, "SELECT id, service FROM product WHERE status = 'Active'");
+                                                                while ($row = mysqli_fetch_assoc($query)) {
+                                                                    echo '<option value="' . $row['id'] . '">' . $row['service'] . '</option>';
+                                                                }
+                                                                ?>
+                                                            </select>
+                                                        </div>
+                                                      <div class="col-md-12 mb-3">
+                                                        <label>Address</label>
+                                                        <input type="text" name="addressline" class="form-control">
                                                     </div>
-                                                    <div class="mb-3 col-md-6">
-                                                        <label class="form-label">Number</label>
-                                                        <input type="text" name="number" class="form-control" required>
                                                     </div>
-                                                    <div class="mb-3 col-md-6">
-                                                        <label class="form-label">Email</label>
-                                                        <input type="email" name="email" class="form-control" required>
+                                                       
+                                                    <div class="text-end">
+                                                        <button type="button" class="btn btn-primary" onclick="nextStep(2)">Next</button>
                                                     </div>
                                                 </div>
 
-                                                <!-- Address -->
-                                                <h4 class="mb-3">Address</h4>
-                                                <div class="row">
-                                                    <div class="mb-3 col-md-8">
-                                                        <label class="form-label">Address</label>
-                                                        <input type="text" name="address" class="form-control" required>
+                                                <!-- Step 2 - Address & Service -->
+                                                <div class="form-step d-none" id="step2">
+                                                    <h4 class="mb-3">Billing Details</h4>
+                                                    <div class="row">
+                                                       
+                                                     
+                                                        <div class="mb-3 col-md-6">
+                                                            <label class="form-label">Service Amount</label>
+                                                            <input type="text" name="amount" class="form-control" id="serviceAmount" readonly>
+                                                        </div>
+                                                          <div class="mb-3 col-md-4">
+                                                            <label class="form-label">Coupon Code</label>
+                                                            <input type="text" name="coupon_code" class="form-control" id="couponCode">
+                                                        </div>
+                                                        <div class="mb-3 col-md-2 d-flex align-items-end">
+                                                            <button type="button" class="btn btn-info w-100" id="applyCoupon">Apply</button>
+                                                        </div>
+                                                        <div class="mb-3 col-md-6">
+                                                            <label class="form-label">Discount Amount</label>
+                                                            <input type="number" id="discountAmount" name="discount_amount" class="form-control" readonly>
+                                                        </div>
+                                                        <div class="mb-3 col-md-4">
+                                                            <label class="form-label">Token Amount</label>
+                                                            <input type="number" name="token_amount" class="form-control">
+                                                        </div>
+                                                        <div class="mb-3 col-md-4">
+                                                            <label class="form-label">GST Amount</label>
+                                                            <input type="number" name="gst_amount" class="form-control">
+                                                        </div>
+                                                        <div class="mb-3 col-md-4">
+                                                            <label class="form-label">Payable Amount</label>
+                                                            <input type="number" name="payable_amount" class="form-control" id="payableAmount" readonly>
+                                                        </div>
                                                     </div>
-                                                    <div class="mb-3 col-md-4">
-                                                        <label class="form-label">Zip Code</label>
-                                                        <input type="text" name="zipcode" class="form-control" required>
-                                                    </div>
-                                                </div>
-
-                                                <!-- Service Details -->
-                                                <h4 class="mb-3">Service Detail</h4>
-                                                <div class="row">
-                                                    <!-- Service Name -->
-                                                    <div class="mb-3 col-md-6">
-                                                        <label class="form-label">Service Name</label>
-                                                        <select name="service_name" class="form-control" id="serviceDropdown" required>
-                                                            <option value="">Select Service</option>
-                                                            <?php
-                                                            $query = mysqli_query($link, "SELECT id, service FROM product WHERE status = 'Active'");
-                                                            while ($row = mysqli_fetch_assoc($query)) {
-                                                                echo '<option value="' . $row['id'] . '">' . $row['service'] . '</option>';
-                                                            }
-                                                            ?>
-                                                        </select>
-                                                    </div>
-
-                                                    <!-- Service Amount -->
-                                                    <div class="mb-3 col-md-6">
-                                                        <label class="form-label">Service Amount</label>
-                                                        <input type="text" name="amount" class="form-control" id="serviceAmount" required readonly>
-                                                    </div>
-
-                                                    <!-- Coupon Code -->
-                                                    <div class="mb-3 col-md-8">
-                                                        <label class="form-label">Coupon Code</label>
-                                                        <input type="text" name="coupon_code" class="form-control" id="couponCode">
-                                                    </div>
-                                                    <div class="mb-3 col-md-4 d-flex align-items-end">
-                                                        <button type="button" class="btn btn-info w-100" id="applyCoupon">Apply</button>
-                                                    </div>
-
-                                                    <!-- Discount Amount -->
-                                                    <div class="mb-3 col-md-4">
-                                                        <label class="form-label">Discount Amount</label>
-                                                        <!-- <input type="number" id="discountAmount" class="form-control" readonly> -->
-                                                        <input type="number" id="discountAmount" name="discount_amount" class="form-control" readonly>
-
-                                                    </div>
-
-                                                    <!-- Token Amount -->
-                                                    <div class="mb-3 col-md-4">
-                                                        <label class="form-label">Token Amount</label>
-                                                        <input type="number" name="token_amount" class="form-control">
-                                                    </div>
-
-                                                    <!-- GST Amount -->
-                                                    <div class="mb-3 col-md-4">
-                                                        <label class="form-label">GST Amount</label>
-                                                        <input type="number" name="gst_amount" class="form-control">
-                                                    </div>
-
-                                                    <!-- Payable Amount -->
-                                                    <div class="mb-3 col-md-4">
-                                                        <label class="form-label">Payable Amount</label>
-                                                        <input type="number" name="payable_amount" class="form-control" id="payableAmount" readonly>
+                                                    <div class="text-end">
+                                                        <button type="button" class="btn btn-secondary" onclick="nextStep(1)">Previous</button>
+                                                        <button type="button" class="btn btn-primary" onclick="nextStep(3)">Next</button>
                                                     </div>
                                                 </div>
 
-                                                <!-- Submit -->
-                                                <div class="text-end">
-                                                    <button type="submit" class="btn btn-primary">Next</button>
-                                                </div>
+                                            
                                             </form>
+
                                         </div>
                                     </div>
                                 </div>
@@ -152,6 +149,62 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['service_id'])) {
 
 </body>
 <!-- data fetch a service amount   -->
+ <script>
+    const apiKey = 'RjE1OUx0VTRYRXBjbzF4TEJoSk9TWnhEN1NzZmhNOUFjakswVVp0cg==';
+    const countryCode = 'IN';
+    const stateSelect = document.getElementById('stateSelect');
+    const citySelect = document.getElementById('citySelect');
+
+    async function fetchStates() {
+        try {
+            const response = await fetch(`https://api.countrystatecity.in/v1/countries/${countryCode}/states`, {
+                headers: {
+                    'X-CSCAPI-KEY': apiKey
+                }
+            });
+            const states = await response.json();
+            states.forEach(state => {
+                const option = document.createElement('option');
+                option.value = state.iso2;
+                option.textContent = state.name;
+                stateSelect.appendChild(option);
+            });
+        } catch (error) {
+            console.error('Error fetching states:', error);
+        }
+    }
+
+    async function fetchCities(stateCode) {
+        try {
+            const response = await fetch(`https://api.countrystatecity.in/v1/countries/${countryCode}/states/${stateCode}/cities`, {
+                headers: {
+                    'X-CSCAPI-KEY': apiKey
+                }
+            });
+            const cities = await response.json();
+            citySelect.innerHTML = '<option value="">Select City</option>';
+            cities.forEach(city => {
+                const option = document.createElement('option');
+                option.value = city.name;
+                option.textContent = city.name;
+                citySelect.appendChild(option);
+            });
+        } catch (error) {
+            console.error('Error fetching cities:', error);
+        }
+    }
+
+    stateSelect.addEventListener('change', () => {
+        const selectedState = stateSelect.value;
+        if (selectedState) {
+            fetchCities(selectedState);
+        } else {
+            citySelect.innerHTML = '<option value="">Select City</option>';
+        }
+    });
+
+    fetchStates();
+</script>
 <script>
     $(document).ready(function() {
         // Fetch service amount
@@ -186,6 +239,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['service_id'])) {
         });
 
 
+
         // Apply coupon
         $('#applyCoupon').on('click', function() {
             var coupon = $('#couponCode').val();
@@ -204,10 +258,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['service_id'])) {
                         if (response.error) {
                             alert(response.error);
                             $('#discountAmount').val('');
-                            $('#payableAmount').val(serviceAmount);
+                            var gstAmount = parseFloat($('input[name="gst_amount"]').val()) || 0;
+                            $('#payableAmount').val((serviceAmount + gstAmount).toFixed(2));
                         } else {
                             $('#discountAmount').val(response.discount);
-                            $('#payableAmount').val(response.payable);
+                            var gstAmount = parseFloat($('input[name="gst_amount"]').val()) || 0;
+                            var payableWithGST = parseFloat(response.payable) + gstAmount;
+                            $('#payableAmount').val(payableWithGST.toFixed(2));
                         }
                     }
                 });
@@ -215,8 +272,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['service_id'])) {
                 alert("Please select a service and enter a valid coupon.");
             }
         });
+
     });
 </script>
+<script>
+    function nextStep(step) {
+        $('.form-step').addClass('d-none');
+        $('#step' + step).removeClass('d-none');
+    }
+</script>
+
 
 
 </html>
